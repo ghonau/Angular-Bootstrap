@@ -27,6 +27,7 @@ export class ProjectsComponent implements OnInit {
 
       this.projectService.insertProject(this.newProject).subscribe((response) => {
           this.projects.push(this.newProject); 
+          
       }, (error) => {
 
         console.log(error.errorText); 
