@@ -1,0 +1,156 @@
+<nav>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item active">Dashboard</li>
+    </ol>
+</nav>
+
+
+<h5>
+    Dashboard
+</h5>
+<div class="row">
+    <div class="col-lg-3 pb-3"  style="border:1px solid red; background-color: #e9e6e6">
+        <div class="row">
+                <div class="col-11 text-center text-white mx-3 rounded py-2 font-weight-bold" 
+                    style="background-color: #a39e9e;font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">
+                    {{Designation}}
+               </div>
+               <div class="col-12 text-center mt-3">
+                   <img src="assets/user.png" width="120px">
+               </div>
+               <div class="col-12 text-center pt-2 pb-2 font-weight-bold" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;">
+                    {{Username}}
+               </div>
+               <div class="col-12 text-dark text-center mt-2" style="font-family:Arial, Helvetica, sans-serif">
+                TEAM SUMMARY
+                </div>
+
+                <div class="col-12 mb-3">
+                        <ul class="list-group">
+                            <li class="mt-1 list-group-item  d-flex justify-content-between align-items-center">
+                                NO. OF TEAM MEMBERS 
+                                <span class="badge badge-secondary bg-secondary rounded-pill" style="font-size:13px">{{NoOfTeamMembers}}</span>
+                            </li>
+                            <li class="mt-1 list-group-item d-flex justify-content-between align-items-center">
+                                TOTAL COST OF ALL PROJECTS <span class="badge bg-secondary rounded-pill" style="font-size:13px;">${{TotalCostOfAllProjects}}k</span>
+                            </li>
+                            <li class="mt-1 list-group-item d-flex justify-content-between align-items-center">
+                              PENDING TASKS<span class="badge bg-secondary rounded-pill" style="font-size:13px;">{{PendingTasks}}</span>
+                            </li>
+                            <li class="mt-1 list-group-item d-flex justify-content-between align-items-center">
+                              UPCOMING PROJECTS<span class="badge bg-secondary rounded-pill" style="font-size:13px;">{{UpComingProjects}}</span>
+                            </li>
+                        </ul>
+                </div>
+                <div class="col-12 text-center pt-2 pb-2" style="font-family:Arial Narrow"> CLIENTS</div>
+                <div class="col-12">
+                    <ul  class="list-group list-group-flush">
+                        <li  *ngFor="let client of Clients" class="list-group-item">{{client}}</li>                        
+                    </ul>
+                </div>              
+        </div>
+    </div>
+    
+    <div class="col-lg-6" style="border:1px solid red;">
+        <div class="row">
+            <div class="col-12 pt-0 pb-2" style='background-color:#e9e6e6 ;'>
+                <div class="row mt-2">
+                    <div class="col-6 text-start">
+                        <select class="dropdown" #projectSelect (change)="onProjectChange($event)">                                                       
+                              <option *ngFor="let project of Projects" [value] = "project"  >{{project}}</option>                              
+                        </select>                            
+                        
+                    </div>
+                    <div class="col-6 text-end">
+                        <select class="dropdown">
+                            <option *ngFor="let year of Years">{{year}}</option>                            
+                        </select>
+                    </div>
+                </div>
+                <div class="col-11 mx-auto mt-1 text-white text-center pt-2 pb-2 rounded font-weight-bold" style="background-color: #718d97; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+                        PROJECT BRIEFING
+                </div>
+                <div class="col-12">
+                    <table class="table table-borderless">
+                            <tr>
+                                <td>Project Cost</td>
+                                <td>${{ProjectCost}}</td>
+                            </tr>
+                            <tr>
+                                <td>Current Expenditure</td>
+                                <td>${{CurrentExpenditure}}</td>
+                            </tr>
+                            <tr>
+                                <td>Available Funds</td>
+                                <td>${{AvailableFunds}}</td>
+                            </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-11 mx-auto mt-1 text-white text-center pt-2 pb-2 mx-2 rounded font-weight-bold" style="background-color:#718d97; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+                    TEAM MEMBER SUMMARY</div>
+            <div class="col-12">
+                <table class="table">
+                    <tr>
+                        <th>Region</th>
+                        <th>Team Member Count</th>
+                        <th>Temporarily Unavailable Members</th>
+                    </tr>
+                    <tr *ngFor="let teamMembersSummary of TeamMembersSummary">
+                        <td><b>{{teamMembersSummary.Region}}</b></td>
+                        <td>{{teamMembersSummary.TeamMemberCount}}</td>
+                        <td>{{teamMembersSummary.TemporarilyUnavailableMembers}}</td>
+                    </tr>                  
+                </table>
+            </div>
+            
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="row">
+            <div class="col-11 mx-auto mt-1 pb-2 pt-2 text-white text-center rounded font-weight-bold" style="font-family: Arial Narrow; background-color: #718d97;">TEAM MEMBERS</div>
+            <div class="col-lg-12 pt-2">
+                <div class="accordion" id="accordionExample">                    
+                    <div *ngFor="let teamMember of TeamMembers; let i = index; " class="accordion-item">
+                        <h2 class="accordion-header" [id]="'heading'+i">
+                            <button class="btn btn-secondary accordion-button" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse'+i">{{teamMember.Region}}</button>
+                        </h2>
+                        <div  [id]="'collapse'+i" class="accordion-collapse collapse" [ngClass] = "(i===1) ? 'show' : ''"data-bs-parent="accordionExample">
+                            <div class="accordion-body">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Name</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let member of teamMember.Members">
+                                                    <td>{{member.ID}}</td>
+                                                    <td>{{member.Name}}</td>
+                                                    <td [ngSwitch]= "member.Status">
+                                                        <ng-container *ngSwitchCase="'Available'">
+                                                            <i  class="fa fa-phone"></i> Available
+                                                        </ng-container>
+                                                        <ng-container  *ngSwitchCase="'Busy'">
+                                                            <i class="fa fa-user-times" [style.color]="'red'"></i> Busy
+                                                        </ng-container>
+                                                        
+                                                    </td>                                                    
+                                                </tr>                                                                                               
+                                            </tbody>                                            
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                                 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

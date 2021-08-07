@@ -1,0 +1,84 @@
+<h1> Projects </h1>
+<div class="row">
+    <div class="col-8 mx-auto">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newProjectModal">Create Project</button>
+    </div>
+    <div class="col-8 mx-auto">
+        <table class="table">
+                <thead>                    
+                    <tr>
+                        <th>Project ID</th>                       
+                        <th>Project Name</th>                       
+                        <th>Date of Start</th>                       
+                        <th>Team Size</th>                       
+                    </tr>                        
+                </thead>
+                <tbody>
+                    <tr *ngFor="let project of projects">
+                        <td>{{project.projectID}}</td>
+                        <td>{{project.projectName}}</td>
+                        <td>{{project.dateOfStart | date : "d/M/y"}}</td>
+                        <td>{{project.teamSize | number}}</td>
+                    </tr>
+                </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal" id="newProjectModal" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">New Project</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>                
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label for="txtNewProjectID" class="col-sm-2 col-form-label">Project ID</label>
+                    <div class="col-sm-10">
+                        <input 
+                        type="text" 
+                        id="txtNewProjectID"
+                        style="width:100px" 
+                        class="form-control" 
+                        placeholder="Project ID" 
+                        name="ProjectID" 
+                        [(ngModel)] = "newProject.projectID">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtNewProjectName" class="col-sm-2 col-form-label">Project Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" 
+                        name="ProjectName"
+                        [(ngModel)] = "newProject.projectName"
+                        id="txtNewProjectName" style="width:100px" class="form-control" placeholder="Project Name">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtStartDate" class="col-sm-2 col-form-label">Start Date</label>
+                    <div class="col-sm-10">
+                        <input type="text" 
+                        id="txtStartDate" 
+                        name="dateOfStart"
+                        [(ngModel)] = "newProject.dateOfStart"
+                        style="width:100px" class="form-control" placeholder="Start Date">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtTeamSize" class="col-sm-2 col-form-label">Team Size</label>
+                    <div class="col-sm-10">
+                        <input type="text" 
+                        name="teamSize"
+                        [(ngModel)] = "newProject.teamSize"
+                        id="txtTeamSize" style="width:100px" class="form-control" placeholder="Team Size">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal" > Cancel </button>
+                    <button class="btn btn-primary" (click) = "onSaveClick()"> Save </button>
+            </div>
+        </div>
+    </div>
+</div>
